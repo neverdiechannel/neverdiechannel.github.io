@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Tools Registrasi Kartu XL - NEVERDIE-CHANNEL</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Neverdie Channel">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="https://my.kmsp-store.com/css/jquery.ccpicker.css">
+  <link rel="stylesheet" href="https://my.kmsp-store.com/assets/css/spinner.css">
+  <link href="https://my.kmsp-store.com/assets/build/toastr.css" rel="stylesheet" type="text/css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-144237878-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'UA-144237878-1');
+</script>
+
+<body>
+  <style>
+    @media only screen and (min-width: 200px) {
+      .atur1 {
+        width: 90%;
+      }
+    }
+
+    @media only screen and (min-width: 600px) {
+      .atur1 {
+        width: 80%;
+      }
+    }
+
+    @media only screen and (min-width: 1000px) {
+      .atur1 {
+        width: 50%;
+      }
+    }
+
+    @media only screen and (min-width: 1300px) {
+      .atur1 {
+        width: 30%;
+      }
+    }
+  </style>
+  <div id="cover-spin"></div>
+  <div class="container atur1" style="margin-top: 150px; margin-bottom: 150px;">
+    <center>
+      <h3 style="font-weight: bold;">TOOLS REGISTRASI KARTU XL</h3><b>By NEVERDIE-CHANNEL<br>v1.0.0</b>
+    </center>
+    <br>
+    <div class="alert alert-success" style="text-align: justify;">
+      <strong><i class="fa fa-bullhorn" aria-hidden="true"></i> INFO</strong><br>Hanya membutuhkan kode PUK yang ada di
+      cangkang kartu XL kamu dan Msisdn (628xxx)</a>
+    </div>
+    <div id="formnya">
+      <div class="form-group">
+        <label for="msisdn">Msisdn XL Kamu:</label>
+        <input type="number" class="form-control" id="msisdn" placeholder="628xxx" value="" maxlength="16" required>
+      </div>
+      <div class="form-group">
+        <label for="puk">Kode PUK:</label>
+        <input type="number" class="form-control" id="puk" placeholder="xxxxxxxx" value="" maxlength="10" required>
+      </div>
+      <button type="button" id="submitRegistrasi" class="btn btn-primary"><i class="fa fa-sign-in"
+          aria-hidden="true"></i> Registrasi Kartu</button>
+      <div id="hasilnya" style="text-align: justify;"></div>
+    </div><br>
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#submitRegistrasi').click(function () {
+        $.ajax({
+          url: "https://apigw.kmsp-store.com/xlregis/api/v1/registrasi-kartu",
+          type: 'POST',
+          dataType: 'json',
+          crossDomain: true,
+          xhrFields: {
+            withCredentials: false
+          },
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+          },
+          data: JSON.stringify({ msisdn: $('#msisdn').val(), puk: $('#puk').val() }),
+          error: function (xhr, ajaxOptions, thrownError) {
+            //error
+            $('#cover-spin').hide();
+            $('#hasilnya').html('');
+            toastr.error('Terjadi kesalahan. Silakan coba lagi!');
+          },
+          cache: false,
+          beforeSend: function (request) {
+            request.setRequestHeader('X-API-Key', 'adcd75bf-3ffa-49c5-b35f-9303ddd59f09');
+            //sebelum kirim
+            $('#cover-spin').show(0);
+          },
+          success: function (s) {
+            //console.log(s);
+
+            $('#cover-spin').hide();
+
+            if (s['status'] == false) {
+              //toastr.error(s['message']);
+              $('#hasilnya').html('');
+              $('#hasilnya').html("<br>" + '<font style="color: red;"><b>' + s['message'] + '</b></font>');
+            }
+
+            if (s['status'] == true) {
+              //toastr.success(s['message']);
+              $('#hasilnya').html('');
+              $('#hasilnya').html("<br>" + '<font style="color: green;"><b>' + s['message'] + '</b></font>');
+            }
+          }
+        });
+      });
+    });
+
+    $(document).on('keypress', function (e) {
+      if (e.which == 13 && ($("#msisdn").is(":focus") || $("#puk").is(":focus"))) {
+        $.ajax({
+          url: "https://apigw.kmsp-store.com/xlregis/api/v1/registrasi-kartu",
+          type: 'POST',
+          dataType: 'json',
+          crossDomain: true,
+          xhrFields: {
+            withCredentials: false
+          },
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+          },
+          data: JSON.stringify({ msisdn: $('#msisdn').val(), puk: $('#puk').val() }),
+          error: function (xhr, ajaxOptions, thrownError) {
+            //error
+            $('#cover-spin').hide();
+            $('#hasilnya').html('');
+            toastr.error('Terjadi kesalahan. Silakan coba lagi!');
+          },
+          cache: false,
+          beforeSend: function (request) {
+            request.setRequestHeader('X-API-Key', 'adcd75bf-3ffa-49c5-b35f-9303ddd59f09');
+            //sebelum kirim
+            $('#cover-spin').show(0);
+          },
+          success: function (s) {
+            //console.log(s);
+
+            $('#cover-spin').hide();
+
+            if (s['status'] == false) {
+              //toastr.error(s['message']);
+              $('#hasilnya').html('');
+              $('#hasilnya').html("<br>" + '<font style="color: red;"><b>' + s['message'] + '</b></font>');
+            }
+
+            if (s['status'] == true) {
+              //toastr.success(s['message']);
+              $('#hasilnya').html('');
+              $('#hasilnya').html("<br>" + '<font style="color: green;"><b>' + s['message'] + '</b></font>');
+            }
+          }
+        });
+      }
+    });
+  </script>
+  <script src="https://my.kmsp-store.com/assets/toastr.js"></script>
+</body>
+
+</html>
