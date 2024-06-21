@@ -1,4 +1,3 @@
-# neverdiechannel.github.io
-By NEVERDIE-CHANNEL
+# Created by
 
 ![Img 1](icon.png)
